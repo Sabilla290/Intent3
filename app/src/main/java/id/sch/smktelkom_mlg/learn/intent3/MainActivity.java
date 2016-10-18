@@ -24,11 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.imageViewPhone)
                 .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialPhoneNumber("032618500");
-                    }
-                });
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialPhoneNumber("081213456310");
+                                        }
+                                    }
+                );
 
         findViewById(R.id.imageViewSMS)
                 .setOnClickListener(new View.OnClickListener() {
@@ -54,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
+
+    private void dialPhoneNumber(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel: "+phoneNumber));
+        if (intent.resolveActivity(getPackageManager())!= null)
+            startActivity(intent);
+    }
+
     static  final  int REQUEST_IMAGE_CAPTURE = 1;
 
     private void capturePhoto() {
@@ -83,17 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void composeSmsMessage(String message) {
 
-        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra("sms_body",message);
-        if (intent.resolveActivity(getPackageManager())!=null)
-            startActivity(intent);
-    }
-
-    private void dialPhoneNumber(String phoneNumber) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel :"+ phoneNumber));
+        intent.putExtra("sms_body", message);
         if (intent.resolveActivity(getPackageManager())!= null)
             startActivity(intent);
     }
+
 }
